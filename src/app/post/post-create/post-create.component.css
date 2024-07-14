@@ -1,0 +1,36 @@
+mat-form-field {
+  background: #8b4ecd;
+}
+
+textarea {
+  width: 100%;
+}
+
+button {
+  border-radius: 12px;
+}
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.form-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.input-field {
+  flex: 1 1 50%;
+  margin-right: 10px;
+}
+
+.add-button {
+  flex: 0 0 auto;
+  margin-top: 24px;
+}
