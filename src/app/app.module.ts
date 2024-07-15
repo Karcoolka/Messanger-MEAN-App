@@ -1,5 +1,3 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
@@ -10,10 +8,10 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {PostCreateComponent} from "./post/post-create/post-create.component";
 import {PostListComponent} from "./post/post-list/post-list.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -29,7 +27,8 @@ import {MatIcon} from "@angular/material/icon";
     MatExpansionModule,
     NgForOf,
     NgIf,
-    MatIcon
+    MatIcon,
+    HttpClientModule,
   ],
   providers: [],
   exports: [
