@@ -34,3 +34,7 @@ mat-toolbar {
   flex: 0 0 auto;
   margin-top: 24px;
 }
+
+mat-spinner {
+  margin: auto;
+}
