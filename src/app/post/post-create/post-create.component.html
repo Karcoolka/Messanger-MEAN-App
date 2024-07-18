@@ -1,12 +1,12 @@
 <mat-card xmlns="http://www.w3.org/1999/html">
-  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+  <form (submit)="onSavePost(postForm)" #postForm="ngForm">
   <mat-form-field class="form-content">
     <mat-label>Title</mat-label>
     <input
       matInput
       type="text"
       name="title"
-      ngModel
+      [ngModel]="post?.title"
       required
       minlength="3"
       #title="ngModel">
@@ -19,7 +19,7 @@
       rows="4"
       name="content"
       required
-      ngModel
+      [ngModel]="post?.content"
     #content="ngModel">
       </textarea>
       <mat-error *ngIf="content.invalid">Please enter a post title</mat-error>

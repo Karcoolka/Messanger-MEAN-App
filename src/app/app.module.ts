@@ -12,6 +12,7 @@ import {PostListComponent} from "./post/post-list/post-list.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {HttpClientModule} from "@angular/common/http";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,8 @@ import {HttpClientModule} from "@angular/common/http";
     NgIf,
     MatIcon,
     HttpClientModule,
+    RouterLink,
+    RouterLinkActive,
   ],
   providers: [],
   exports: [
