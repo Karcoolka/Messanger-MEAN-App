@@ -14,6 +14,8 @@ import {MatIcon} from "@angular/material/icon";
 import {HttpClientModule} from "@angular/common/http";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatPaginator} from "@angular/material/paginator";
+
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     HttpClientModule,
     RouterLink,
     RouterLinkActive,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatPaginator
   ],
   providers: [],
   exports: [
