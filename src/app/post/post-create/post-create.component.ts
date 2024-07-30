@@ -1,23 +1,23 @@
-import {Component, EventEmitter, OnInit} from "@angular/core";
-import {FormsModule, NgForm} from "@angular/forms";
+import {Component, OnInit} from "@angular/core";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatError, MatFormField, MatInput, MatLabel} from "@angular/material/input";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {Post} from "../post.model";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
 import {NgIf} from "@angular/common";
 import {PostsService} from "../posts.service";
-import {ActivatedRoute, ParamMap, RouterModule} from "@angular/router";
+import {ActivatedRoute, ParamMap} from "@angular/router";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {mimeType} from "./mime-type.validator";
 
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
   styleUrl: './post-create.component.css',
     imports: [
-        FormsModule,
+        ReactiveFormsModule,
         MatInput,
         MatFormField,
         MatCard,
@@ -39,8 +39,10 @@ export class PostCreateComponent implements OnInit {
   enteredContent = '';
   post: any;
   private mode = 'create';
-  private postId: string | null | undefined;
+  private postId!: string | null;
   isLoading: boolean = false;
+  form!: FormGroup;
+  imagePreview!: string;
 
   constructor(
     public postsService: PostsService,
@@ -48,40 +50,80 @@ export class PostCreateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.form = new FormGroup({
+      title: new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(3)]
+      }),
+      content: new FormControl(null, { validators: [Validators.required] }),
+      image: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [mimeType]
+      })
+    });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('postId')) {
-        this.mode = 'edit';
-        this.postId = paramMap.get('postId');
+      if (paramMap.has("postId")) {
+        this.mode = "edit";
+        this.postId = paramMap.get("postId");
         this.isLoading = true;
         this.postsService.getPost(this.postId).subscribe(postData => {
           this.isLoading = false;
-          this.post = {id: postData._id, title: postData.title, content: postData.content};
-          console.log(this.post);
-          console.log(postData);
+          this.post = {
+            id: postData._id,
+            title: postData.title,
+            content: postData.content,
+            imagePath: postData.imagePath
+          };
+          this.form.setValue({
+            title: this.post.title,
+            content: this.post.content,
+            image: this.post.imagePath
+          });
         });
       } else {
-        this.mode = 'create';
+        this.mode = "create";
         this.postId = null;
       }
     });
   }
 
-  onSavePost(form: NgForm) {
-    if (form.invalid) {
+  onImgPicked(event: Event) {
+    const target = event.target as HTMLInputElement;
+
+    if (target.files && target.files.length > 0) {
+      const file = target.files[0];
+      this.form.patchValue({ image: file });
+      this.form.get("image")?.updateValueAndValidity();
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      console.error('No file selected or files are null');
+    }
+  }
+
+  onSavePost() {
+    if (this.form.invalid) {
       return;
     }
     this.isLoading = true;
-    if (this.mode === 'create') {
-      this.postsService.addPost(form.value.title, form.value.content);
-    }
-    else {
+    if (this.mode === "create") {
+      this.postsService.addPost(
+          this.form.value.title,
+          this.form.value.content,
+          this.form.value.image
+      );
+    } else {
       this.postsService.updatePost(
-        this.postId,
-        form.value.title,
-        form.value.content
+          this.postId,
+          this.form.value.title,
+          this.form.value.content,
+          this.form.value.image
       );
     }
-    form.resetForm();
+    this.form.reset();
   }
 
 }
