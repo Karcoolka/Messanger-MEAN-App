@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./header/header.component";
@@ -15,15 +15,20 @@ import {HttpClientModule} from "@angular/common/http";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatPaginator} from "@angular/material/paginator";
+import {LoginComponent} from "./auth/login/login.component";
+import {SignupComponent} from "./auth/signup/signup.component";
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    PostListComponent
+    PostListComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     ReactiveFormsModule,
+    FormsModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,

@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const postsRoutes = require('./routes/posts');
+const userRoutes = require('./routes/user');
+
 const app = express();
 
 mongoose.connect('mongodb+srv://adela:eqYA8DVGbouYnaeW@clustermeanapp.mlo9uoq.mongodb.net/node-angular?retryWrites=true&w=majority&appName=ClusterMEANApp'
