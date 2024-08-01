@@ -11,12 +11,13 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {PostListComponent} from "./post/post-list/post-list.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatPaginator} from "@angular/material/paginator";
 import {LoginComponent} from "./auth/login/login.component";
 import {SignupComponent} from "./auth/signup/signup.component";
+import {AuthInterceptor} from "./auth/auth-interceptor";
 
 
 @NgModule({
@@ -41,9 +42,9 @@ import {SignupComponent} from "./auth/signup/signup.component";
     RouterLink,
     RouterLinkActive,
     MatProgressSpinnerModule,
-    MatPaginator
+    MatPaginator,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   exports: [
     HeaderComponent,
     PostListComponent
