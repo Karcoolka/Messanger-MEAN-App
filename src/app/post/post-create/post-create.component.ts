@@ -6,13 +6,14 @@ import {MatButton} from "@angular/material/button";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {PostsService} from "../posts.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {mimeType} from "./mime-type.validator";
 import {Subscription} from "rxjs";
 import {AuthService} from "../../auth/auth.service";
+import {AngularMaterialModule} from "../../angular-material.module";
 
 @Component({
   selector: 'app-post-create',
@@ -32,6 +33,9 @@ import {AuthService} from "../../auth/auth.service";
         MatError,
         NgIf,
         MatProgressSpinner,
+      ReactiveFormsModule,
+      CommonModule,
+      AngularMaterialModule
     ],
   standalone: true
 })

@@ -1,53 +1,33 @@
 import { NgModule } from "@angular/core";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./header/header.component";
-import {MatInputModule} from "@angular/material/input";
-import {MatCardModule} from "@angular/material/card";
-import {MatButtonModule} from "@angular/material/button";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatExpansionModule} from "@angular/material/expansion";
-import {PostListComponent} from "./post/post-list/post-list.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatPaginator} from "@angular/material/paginator";
-import {LoginComponent} from "./auth/login/login.component";
-import {SignupComponent} from "./auth/signup/signup.component";
 import {AuthInterceptor} from "./auth/auth-interceptor";
 import {ErrorInterceptor} from "./error-interceptor";
-import {MatDialogModule} from "@angular/material/dialog";
 import {ErrorComponent} from "./error/error.component";
+import {AngularMaterialModule} from "./angular-material.module";
+import {PostModule} from "./post/post.module";
+import {AuthModule} from "./auth/auth.module";
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    PostListComponent,
-    LoginComponent,
-    SignupComponent,
     ErrorComponent
   ],
   imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
     NgForOf,
     NgIf,
     MatIcon,
     HttpClientModule,
     RouterLink,
     RouterLinkActive,
-    MatProgressSpinnerModule,
-    MatPaginator,
-    MatDialogModule
+    AngularMaterialModule,
+    PostModule,
+    AuthModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -55,7 +35,6 @@ import {ErrorComponent} from "./error/error.component";
   ],
   exports: [
     HeaderComponent,
-    PostListComponent
   ],
   bootstrap: [AppComponent],
 })
