@@ -10,7 +10,7 @@ import {ErrorInterceptor} from "./error-interceptor";
 import {ErrorComponent} from "./error/error.component";
 import {AngularMaterialModule} from "./angular-material.module";
 import {PostModule} from "./post/post.module";
-import {AuthModule} from "./auth/auth.module";
+import {AuthRoutingModule} from "./auth/auth-routing.module";
 
 
 @NgModule({
@@ -27,7 +27,7 @@ import {AuthModule} from "./auth/auth.module";
     RouterLinkActive,
     AngularMaterialModule,
     PostModule,
-    AuthModule,
+    AuthRoutingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
