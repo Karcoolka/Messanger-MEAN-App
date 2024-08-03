@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import { Subject } from "rxjs";
 
 import { AuthData } from "./auth-data.model";
+import {MatDialog} from "@angular/material/dialog";
+import {ErrorComponent} from "../error/error.component";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -13,7 +15,11 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private userId!: string | null;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   getToken() {
     return this.token;
@@ -33,10 +39,19 @@ export class AuthService {
 
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
-    this.http
+    return this.http
       .post("http://localhost:3000/api/user/signup", authData)
       .subscribe(response => {
-      });
+        this.router.navigate(["/"]);
+        },
+        error => {
+        let errorMessage = 'An unknown error occurred!';
+        if (error.error.message) {
+          errorMessage = error.error.message;
+        }
+        this.dialog.open(ErrorComponent, {data: {message: errorMessage}});
+        this.authStatusListener.next(false);
+        });
   }
 
   login(email: string, password: string) {
@@ -60,6 +75,14 @@ export class AuthService {
           this.saveAuthData(token, expirationDate, this.userId);
           this.router.navigate(["/"]);
         }
+      },
+        error => {
+          let errorMessage = 'An unknown error occurred!';
+          if (error.error.message) {
+            errorMessage = error.error.message;
+          }
+          this.dialog.open(ErrorComponent, {data: {message: errorMessage}});
+          this.authStatusListener.next(false);
       });
   }
 
